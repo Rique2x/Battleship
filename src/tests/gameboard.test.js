@@ -1,5 +1,9 @@
 import Gameboard from '../modules/gameboard'
+import obs from '../modules/observer'
 // import Ship from './ship'
+
+
+jest.mock('../modules/observer')
 
 const mockShip = jest.fn((n) => {
   const body = []
@@ -8,7 +12,8 @@ const mockShip = jest.fn((n) => {
     n--
   }
   const isSunk = jest.fn(() => {
-    return true
+    if (body.every((x) => x.status === 'hit')) return true
+    return false
   })
   return { body, isSunk }
 })
@@ -101,25 +106,54 @@ describe('occupied space', () => {
   })
 })
 
-test('can receive attack (no hit)', () => {
-  const gameboard = Gameboard()
-  gameboard.receiveAttack([2, 4])
-  gameboard.receiveAttack([0, 9])
+describe('attacks', () => {
+  test('can receive attack (no hit)', () => {
+    const gameboard = Gameboard()
+    gameboard.receiveAttack([2, 4])
+    gameboard.receiveAttack([0, 9])
 
-  expect(gameboard.board[2][4]).toBe(0)
-  expect(gameboard.board[0][9]).toBe(0)
-})
+    expect(gameboard.board[2][4]).toBe(0)
+    expect(gameboard.board[0][9]).toBe(0)
+  })
 
-test('can receive attack (hit)', () => {
-  const ship = mockShip(5)
-  const gameboard = Gameboard()
-  gameboard.placeShip([1, 1], ship, 'x')
-  gameboard.receiveAttack([1, 2])
 
-  expect(gameboard.board[1][1].section.status).toBe('ok')
-  expect(gameboard.board[1][2].section.status).toBe('hit')
-  expect(ship.body[0].status).toBe('ok')
-  expect(ship.body[1].status).toBe('hit')
+  test('can receive attack (hit)', () => {
+    const ship = mockShip(5)
+    const gameboard = Gameboard()
+    gameboard.placeShip([1, 1], ship, 'x')
+    gameboard.receiveAttack([1, 2])
+
+    expect(gameboard.board[1][1].section.status).toBe('ok')
+    expect(gameboard.board[1][2].section.status).toBe('hit')
+    expect(ship.body[0].status).toBe('ok')
+    expect(ship.body[1].status).toBe('hit')
+  })
+
+  test('reports when any ship is sunk', () => {
+    const gameboard = Gameboard()
+    const shipOne = mockShip(1)
+    const shipTwo = mockShip(2)
+    gameboard.placeShip([0, 0], shipOne)
+    gameboard.placeShip([4, 4], shipTwo)
+
+    obs.publish.mockImplementation((name, obj) => {
+      return name
+    })
+    expect(shipTwo.isSunk()).toBe(false)
+    expect(gameboard.receiveAttack([0, 0])).toBe('ship sunk')
+  })
+
+  test('reports when all ships are sunk', () => {
+    const gameboard = Gameboard()
+    const onlyShip = mockShip(1)
+    gameboard.placeShip([0, 0], onlyShip)
+
+    obs.publish.mockImplementation((name, obj) => {
+      return name
+    })
+
+    expect(gameboard.receiveAttack([0, 0])).toBe('all ships sunk')
+  })
 })
 
 describe('tracks ships', () => {
@@ -142,6 +176,6 @@ describe('tracks ships', () => {
     gameboard.receiveAttack([7, 4])
     gameboard.receiveAttack([8, 4])
 
-    expect(gameboard.ships[1].isSunk()).toBe(true)
+    expect(gameboard.ships[2].isSunk()).toBe(true)
   })
 })
