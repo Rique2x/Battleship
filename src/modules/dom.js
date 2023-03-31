@@ -1,3 +1,5 @@
+import obs from './observer'
+
 const dom = (function () {
     const generateBoard = function (board) {
       for (let i = 0; i < 10; i++) {
@@ -5,6 +7,9 @@ const dom = (function () {
         for (let r = 0; r < 10; r++) {
           const row = document.createElement('div')
           row.classList.add(`y${i}x${r}`)
+          row.addEventListener('click', (e) => {
+            obs.publish('cellSelection', e)
+          })
           col.append(row)
         }
         board.append(col)

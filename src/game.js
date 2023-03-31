@@ -10,6 +10,11 @@ const game = (function () {
     return { one, two }
   }
 
+  const switchTurn = function () {
+    turn = turn === players.one ? players.two : players.one
+  }
+
+
   const initGame = function (players) {
     const playerOne = players[0]
     const playerTwo = players[1]
@@ -32,6 +37,43 @@ const game = (function () {
     dom.renderShips(players.two.gameboard.board, boards.two.board)
   }
 
+  const handleAttack = function (data) {
+    if (data[0] === players.two) {
+      players.two.gameboard.receiveAttack(data[1])
+    } else if (data[0] === players.one) {
+      players.one.gameboard.receiveAttack(data[1])
+    }
+    updateDom()
+  }
+
+  const handleSelection = function (event) {
+    const target = event.target
+    const targetIndex = [+target.classList[0][1], +target.classList[0][3]]
+
+    if (boards.one.board === event.composedPath()[2]) {
+      if (turn === players.one) console.log('own board idiot')
+      else {
+        if (target.classList[1] === 'miss' || target.classList[2] === 'hit')
+          console.log('already attacked')
+        else {
+          players.two.attack(targetIndex, players.one)
+          switchTurn()
+        }
+      }
+    } else {
+      if (turn === players.two) console.log('own board idiot')
+      else {
+        if (target.classList[1] === 'miss' || target.classList[2] === 'hit')
+          console.log('already attacked')
+        else {
+          players.one.attack(targetIndex, players.two)
+          switchTurn()
+        }
+      }
+    }
+  }
+
+
   const elements = {
     boardOne: document.getElementById('board-one'),
     boardTwo: document.getElementById('board-two'),
@@ -39,16 +81,13 @@ const game = (function () {
 
   const players = setPlayers()
 
+  let turn = players.one
+
   const boards = initGame(players)
 
-  obs.subscribe('attack', (data) => {
-    if (data[0] === players.two) {
-      players.two.gameboard.receiveAttack(data[1])
-    } else if (data[0] === players.one) {
-      players.one.gameboard.receiveAttack(data[1])
-    }
-    updateDom()
-  })
+  obs.subscribe('attack', handleAttack)
+
+  obs.subscribe('cellSelection', handleSelection)
 
   return { setPlayers, boards, initGame, newShip, elements, players, updateDom }
 })()
