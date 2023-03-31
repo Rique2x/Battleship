@@ -1,5 +1,6 @@
 const observer = {
     events: {},
+    data: {},
   
     subscribe: function (eventName, fn) {
       this.events[eventName] = this.events[eventName] || []
