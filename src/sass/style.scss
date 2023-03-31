@@ -7,4 +7,18 @@ body {
     width: 100vw;
     height: 100vh;
     background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+#grid-one, #grid-two {
+    border: 2px solid #FFF;
+    width: min-content;
+    height: min-content;
+}
+#grid-on > div > div, #grid-two > div > div {
+    width: 15px;
+    height: 15px;
 }
