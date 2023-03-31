@@ -35,7 +35,7 @@ const Gameboard = function () {
         y++
       }
       } else {
-        if (X > 9 - ship.body.length - 1)
+        if (X > 9 - ship.body.length + 1)
           throw new Error('Ship is too big for this position!')
 
           let x = X

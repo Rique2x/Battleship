@@ -13,12 +13,28 @@ body {
     gap: 2rem;
 }
 
-#grid-one, #grid-two {
+#board-one, #board-two {
     border: 2px solid #FFF;
     width: min-content;
     height: min-content;
+    background: #ccc;
+
+    div {
+        display: flex;
+
+        div {
+                width: 30px;
+                height: 30px;
+                border: 1px solid #000;
+            }
+    }
 }
-#grid-on > div > div, #grid-two > div > div {
-    width: 15px;
-    height: 15px;
+.hit {
+    background-color: red;
+}
+.ok {
+    background-color: #333;
+}
+.miss {
+    background-color: yellow;
 }

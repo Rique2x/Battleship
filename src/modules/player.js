@@ -4,11 +4,11 @@ import Gameboard from '../modules/gameboard'
 const Player = function (type) {
   const gameboard = Gameboard()
 
-  const attack = function (index) {
+  const attack = function (index, enemy) {
     if (index[0] < 0 || index[0] > 9 || index[1] < 0 || index[1] > 9)
       throw new Error('Cannot attack outside the board!')
 
-    return obs.publish('attack', [this, index])
+      return obs.publish('attack', [enemy, index])
   }
 
   const play = function (enemyBoard) {

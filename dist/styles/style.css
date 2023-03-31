@@ -14,15 +14,31 @@ body {
   gap: 2rem;
 }
 
-#grid-one, #grid-two {
+#board-one, #board-two {
   border: 2px solid #FFF;
   width: -moz-min-content;
   width: min-content;
   height: -moz-min-content;
   height: min-content;
+  background: #ccc;
+}
+#board-one div, #board-two div {
+  display: flex;
+}
+#board-one div div, #board-two div div {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #000;
 }
 
-#grid-on > div > div, #grid-two > div > div {
-  width: 15px;
-  height: 15px;
+.hit {
+  background-color: red;
+}
+
+.ok {
+  background-color: #333;
+}
+
+.miss {
+  background-color: yellow;
 }/*# sourceMappingURL=style.css.map */
