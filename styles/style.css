@@ -7,10 +7,28 @@
 body {
   width: 100vw;
   height: 100vh;
-  background: #000;
+  background: #1e352f;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+header {
+  background-color: #335145;
+  height: 13vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 10px #000;
+}
+header h1 {
+  font-size: 4rem;
+}
+
+footer {
+  background-color: #1e352f;
+  height: 5vh;
+  box-shadow: 0px -2px 10px #000;
 }
 
 main {
@@ -19,24 +37,31 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 150px;
 }
 
 #player-one-wrap, #player-two-wrap {
-  padding: 1rem;
-  background-color: #333;
+  padding: 60px;
+  background-color: #828c51;
+  box-shadow: 0px 5px 10px -2px #000;
+  border-radius: 5px;
 }
 
 #player-one-wrap.turn, #player-two-wrap.turn {
-  background-color: green;
+  outline: none;
+}
+
+#player-one-wrap.turn #board-one, #player-two-wrap.turn #board-two {
+  border-bottom: 4px solid #335145;
 }
 
 #board-one, #board-two {
-  border: 2px solid #FFF;
+  border-bottom: 4px solid #ce2415;
   width: -moz-min-content;
   width: min-content;
   height: -moz-min-content;
   height: min-content;
-  background: #ccc;
+  background: #d6f3ba;
 }
 #board-one div, #board-two div {
   display: flex;
@@ -44,20 +69,32 @@ main {
 #board-one div div, #board-two div div {
   width: 30px;
   height: 30px;
-  border: 1px solid #000;
+  border: 1px solid #1e352f;
+  cursor: crosshair;
+  transition: background 500ms;
 }
 #board-one div div:hover, #board-two div div:hover {
-  background-color: green;
+  border: 1px solid #ce2415;
+}
+
+#board-one div div:hover {
+  border: 1px solid #1e352f;
 }
 
 .hit {
-  background-color: red;
+  background-image: url(./assets/icons/hit.svg);
+  background-size: cover;
 }
 
-.ok {
-  background-color: #333;
+#board-one .ok {
+  background-color: #1e352f;
 }
 
 .miss {
-  background-color: yellow;
+  background-image: url(./assets/icons/miss.svg);
+  background-size: cover;
+}
+
+.sunk {
+  background-color: #ce2415;
 }/*# sourceMappingURL=style.css.map */
