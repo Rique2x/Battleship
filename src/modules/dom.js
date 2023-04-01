@@ -2,13 +2,16 @@ import obs from './observer'
 
 const dom = (function () {
     const generateBoard = function (board) {
+      board.replaceChildren()
       for (let i = 0; i < 10; i++) {
         const col = document.createElement('div')
         for (let r = 0; r < 10; r++) {
           const row = document.createElement('div')
           row.classList.add(`y${i}x${r}`)
           row.addEventListener('click', (e) => {
-            obs.publish('cellSelection', e)
+            if (e.composedPath()[2] === document.getElementById('new-board')) {
+              obs.publish('placeShip', e)
+            } else obs.publish('cellSelection', e)
           })
           col.append(row)
         }
@@ -42,7 +45,7 @@ const dom = (function () {
       }
     }
   
-    return { startDom, renderShips }
+    return { startDom, renderShips, generateBoard }
   })()
   
   export default dom

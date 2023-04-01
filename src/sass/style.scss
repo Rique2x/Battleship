@@ -28,7 +28,7 @@ $attack: #ce2415;
 body {
     width: 100vw;
     height: 100vh;
-    background: $dark;
+    background: $semi-dark;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -41,6 +41,8 @@ header {
     justify-content: center;
     align-items: center;
     box-shadow: 0px 2px 10px #000;
+    position: relative;
+    z-index: 1;
 
     h1 {
         font-family: $main-font;
@@ -50,15 +52,32 @@ header {
 }
 
 footer {
-    background-color: $dark;
+    background-color: $semi-dark;
     height: 5vh;
     width: 100%;
     box-shadow: 0px -2px 10px #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    a {
+        transform: scale(.7);
+        img {
+            transform: rotate(180deg);
+            transition: transform 500ms;
+            &:hover {
+                transform: rotate(0deg);
+            }
+        }
+    }
 }
 
 main {
+    position: relative;
     flex-grow: 1;
     width: 100%;
+    height: auto;
     display: flex;
     flex-direction: var(--main-dir);
     justify-content: center;
@@ -102,7 +121,6 @@ main {
             width: 30px;
             height: 30px;
             border: 1px solid $dark;
-            cursor: crosshair;
             transition: background 500ms;
 
             &:hover {
@@ -112,6 +130,10 @@ main {
     }
 }
 
+#board-two {
+    cursor: crosshair;
+}
+
 #board-one div div:hover {
     border: 1px solid $dark;
 }
@@ -119,14 +141,124 @@ main {
 .hit {
     background-image: url(./assets/icons/hit.svg);
     background-size:cover;
+    &:hover {
+        border: 1px solid $dark !important;
+    }
 }
-#board-one .ok {
+
+#board-one .ok, #board-one .hit {
     background-color: $dark;
 }
 .miss {
     background-image: url(./assets/icons/miss.svg);
     background-size:cover;
+    &:hover {
+        border: 1px solid $dark !important;
+    }
 }
 .sunk {
     background-color: $attack;
+    }
+#board-one .sunk {
+    background-color: $attack !important;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#end-screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(30, 53, 47, .9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    div {
+        padding: 60px;
+        background-color: $main-green;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        font-family: $main-font;
+        box-shadow: 0px 10px 10px #000;
+        justify-content: center;
+        align-items: center;
+    }
+    div > p {
+        font-size: 1.5rem;
+    }
+    div > button {
+        font-family: $main-font;
+        padding: 5px 10px;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        background-color: $light;
+    }
+}
+
+#new-screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: $dark;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    > div:not(#new-board) {
+        padding: 30px;
+        background-color: $main-green;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        font-family: $main-font;
+        box-shadow: 0px 10px 10px #000;
+        justify-content: center;
+        align-items: center;
+    }
+    > div > p {
+        font-size: 1.5rem;
+    }
+    .buttons {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        button {
+            cursor: grab;
+            font-size: 1.3rem;
+            padding: 5px 10px;
+            background-color: $light;
+            font-family: $main-font;
+            border-radius: 5px;
+        }
+    }
+
+}
+#new-board {
+    background-color: $light;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid $semi-dark;
+    > div {
+        display: flex;
+        flex-direction: row;
+        > div {
+        width: 30px;
+        height: 30px;
+        border: 1px solid $semi-dark;
+            &:hover {
+                background-color: $semi-dark;
+            }
+            &.ok {
+                background-color: $dark;
+            }
+        }
+    }
+
 }

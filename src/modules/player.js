@@ -19,7 +19,7 @@ const Player = function (type) {
       index = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)]
       const target = enemyBoard[index[0]][index[1]]
       if (target === undefined) break
-      if (typeof target === 'object' && target.status === 'ok') break
+      if (typeof target === 'object' && target.section.status === 'ok') break
     }
     return attack(index, enemy)
   }
