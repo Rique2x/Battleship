@@ -6,4 +6,11 @@ module.exports = {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  plugins: [
+    ({
+      title: 'Battleship',
+      template: './dist/index.html',
+      favicon: './dist/icons/favicon.png',
+    }),
+  ]
 };

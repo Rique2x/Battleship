@@ -12,8 +12,7 @@ const game = (function () {
 
   const switchTurn = function () {
     turn = turn === players.one ? players.two : players.one
-    elements.playerOneWrap.classList.toggle('turn')
-    elements.playerTwoWrap.classList.toggle('turn')
+    dom.switchTurn()
   }
 
 
@@ -25,7 +24,7 @@ const game = (function () {
     const one = { player: playerOne, board: elements.boardOne }
     const two = { player: playerTwo, board: elements.boardTwo }
 
-    elements.newScreen.classList.remove('hidden')
+    dom.showNewScreen()
 
     return { one, two }
   }
@@ -36,29 +35,25 @@ const game = (function () {
     dom.renderShips(player.gameboard.board, domboard)
   }
 
-  const updateDom = function () {
-    dom.renderShips(players.one.gameboard.board, boards.one.board)
-    dom.renderShips(players.two.gameboard.board, boards.two.board)
-  }
-
+  
   const handleAttack = function (data) {
     if (data[0] === players.two) {
       players.two.gameboard.receiveAttack(data[1])
     } else if (data[0] === players.one) {
       players.one.gameboard.receiveAttack(data[1])
     }
-    updateDom()
+    dom.updateDom(players)
   }
 
   const handleSelection = function (event) {
     const target = event.target
-    const targetIndex = [+target.classList[0][1], +target.classList[0][3]]
+    const targetIndex = dom.getCellIndex(target)
 
     if (boards.two.board === event.composedPath()[2]) {
       if (turn === players.two);
       else {
         if (target.classList[1] === 'miss' || target.classList[2] === 'hit')
-          console.log('already attacked')
+        console.log('Already attacked this position!')
         else {
           players.one.attack(targetIndex, players.two)
           switchTurn()
@@ -72,7 +67,7 @@ const game = (function () {
   }
 
   const handleEndgame = function (data) {
-    elements.endScreen.classList.remove('hidden')
+    dom.showEndScreen()
     if (turn === players.one) elements.endMessage.textContent = `You Win!`
     else elements.endMessage.textContent = 'You Lose!'
   }
@@ -81,8 +76,8 @@ const game = (function () {
     players = setPlayers()
     boards = initGame(players)
     turn = players.one
-    elements.endScreen.classList.add('hidden')
-    elements.newScreen.classList.remove('hidden')
+    dom.hideEndScreen()
+    dom.showNewScreen()
     dom.generateBoard(elements.newBoard)
   }
 
@@ -107,7 +102,7 @@ const game = (function () {
 
   const handleStart = function () {
     if (players.one.gameboard.ships.length < 5) return
-    elements.newScreen.classList.add('hidden')
+    dom.hideNewScreen()
     placeEnemyShips()
     dom.renderShips(players.one.gameboard.board, elements.boardOne)
   }
@@ -117,10 +112,7 @@ const game = (function () {
       if (elements.newButton.disabled) elements.newButton.disabled = false
       if (players.one.gameboard.ships.length === 5) return
     }
-    const target = [
-      +data.composedPath()[0].classList[0][1],
-      +data.composedPath()[0].classList[0][3],
-    ]
+    const target = dom.getCellIndex(data.composedPath()[0])
     const axis =
       elements.newAxis.textContent[
         elements.newAxis.textContent.length - 1
@@ -131,19 +123,7 @@ const game = (function () {
     } catch {}
   }
 
-  const elements = {
-    boardOne: document.getElementById('board-one'),
-    boardTwo: document.getElementById('board-two'),
-    playerOneWrap: document.getElementById('player-one-wrap'),
-    playerTwoWrap: document.getElementById('player-two-wrap'),
-    endScreen: document.getElementById('end-screen'),
-    endMessage: document.querySelector('#end-screen p'),
-    endButton: document.querySelector('#end-screen button'),
-    newScreen: document.getElementById('new-screen'),
-    newBoard: document.getElementById('new-board'),
-    newAxis: document.getElementById('axis-button'),
-    newButton: document.getElementById('start-button'),
-  }
+  const elements = dom.elements
 
   let players = setPlayers()
 
@@ -163,30 +143,11 @@ const game = (function () {
 
   elements.newButton.addEventListener('click', handleStart)
 
-  elements.newAxis.addEventListener('click', () => {
-    if (
-      elements.newAxis.textContent[elements.newAxis.textContent.length - 1] ===
-      'X'
-    )
-      elements.newAxis.textContent = 'Axis: Y'
-    else elements.newAxis.textContent = 'Axis: X'
-  })
+  elements.newAxis.addEventListener('click', dom.switchAxis)
 
-  dom.generateBoard(elements.newBoard)
+  elements.ghIcon.src = gh
 
-  return { setPlayers, boards, initGame, newShip, elements, players, updateDom }
+  return {}
 })()
 
 export default game
-
-// game.newShip(game.players.one, game.elements.boardOne, [2, 4], 4, 'y')
-// game.newShip(game.players.one, game.elements.boardOne, [2, 6], 3, 'x')
-// game.newShip(game.players.one, game.elements.boardOne, [0, 0], 5, 'y')
-// game.newShip(game.players.one, game.elements.boardOne, [8, 3], 2, 'x')
-// game.newShip(game.players.one, game.elements.boardOne, [9, 7], 1, 'x')
-
-// game.newShip(game.players.two, game.elements.boardTwo, [2, 4], 4, 'y')
-// game.newShip(game.players.two, game.elements.boardTwo, [2, 6], 3, 'x')
-// game.newShip(game.players.two, game.elements.boardTwo, [0, 0], 5, 'y')
-// game.newShip(game.players.two, game.elements.boardTwo, [8, 3], 2, 'x')
-// game.newShip(game.players.two, game.elements.boardTwo, [9, 7], 1, 'x')
