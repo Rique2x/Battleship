@@ -12,6 +12,8 @@ const game = (function () {
 
   const switchTurn = function () {
     turn = turn === players.one ? players.two : players.one
+    elements.playerOneWrap.classList.toggle('turn')
+    elements.playerTwoWrap.classList.toggle('turn')
   }
 
 
@@ -50,24 +52,18 @@ const game = (function () {
     const target = event.target
     const targetIndex = [+target.classList[0][1], +target.classList[0][3]]
 
-    if (boards.one.board === event.composedPath()[2]) {
-      if (turn === players.one) console.log('own board idiot')
-      else {
-        if (target.classList[1] === 'miss' || target.classList[2] === 'hit')
-          console.log('already attacked')
-        else {
-          players.two.attack(targetIndex, players.one)
-          switchTurn()
-        }
-      }
-    } else {
-      if (turn === players.two) console.log('own board idiot')
+    if (boards.two.board === event.composedPath()[2]) {
+      if (turn === players.two);
       else {
         if (target.classList[1] === 'miss' || target.classList[2] === 'hit')
           console.log('already attacked')
         else {
           players.one.attack(targetIndex, players.two)
           switchTurn()
+          setTimeout(() => {
+            players.two.play(players.one.gameboard.board, players.one)
+            switchTurn()
+          }, 1000)
         }
       }
     }
@@ -77,6 +73,8 @@ const game = (function () {
   const elements = {
     boardOne: document.getElementById('board-one'),
     boardTwo: document.getElementById('board-two'),
+    playerOneWrap: document.getElementById('player-one-wrap'),
+    playerTwoWrap: document.getElementById('player-two-wrap'),
   }
 
   const players = setPlayers()
@@ -95,7 +93,13 @@ const game = (function () {
 export default game
 
 game.newShip(game.players.one, game.elements.boardOne, [2, 4], 4, 'y')
-game.newShip(game.players.one, game.elements.boardOne, [2, 6], 4, 'x')
+game.newShip(game.players.one, game.elements.boardOne, [2, 6], 3, 'x')
+game.newShip(game.players.one, game.elements.boardOne, [0, 0], 5, 'y')
+game.newShip(game.players.one, game.elements.boardOne, [8, 3], 2, 'x')
+game.newShip(game.players.one, game.elements.boardOne, [9, 7], 1, 'x')
 
-game.players.two.attack([3, 4], game.players.one)
-game.players.two.attack([1, 4], game.players.one)
+game.newShip(game.players.two, game.elements.boardTwo, [2, 4], 4, 'y')
+game.newShip(game.players.two, game.elements.boardTwo, [2, 6], 3, 'x')
+game.newShip(game.players.two, game.elements.boardTwo, [0, 0], 5, 'y')
+game.newShip(game.players.two, game.elements.boardTwo, [8, 3], 2, 'x')
+game.newShip(game.players.two, game.elements.boardTwo, [9, 7], 1, 'x')

@@ -11,7 +11,7 @@ const Player = function (type) {
       return obs.publish('attack', [enemy, index])
   }
 
-  const play = function (enemyBoard) {
+  const play = function (enemyBoard, enemy) {
     if (type === 'user') throw new Error('Users cannot use play method!')
 
     let index
@@ -21,7 +21,7 @@ const Player = function (type) {
       if (target === undefined) break
       if (typeof target === 'object' && target.status === 'ok') break
     }
-    return attack(index)
+    return attack(index, enemy)
   }
 
   return { gameboard, type, attack, play }

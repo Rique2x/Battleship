@@ -8,9 +8,25 @@ body {
     height: 100vh;
     background: #000;
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+main {
+    flex-grow: 1;
+    width: 100vw;
+    display: flex;
     justify-content: center;
     align-items: center;
-    gap: 2rem;
+}
+
+#player-one-wrap, #player-two-wrap {
+    padding: 1rem;
+    background-color: #333;
+
+}
+#player-one-wrap.turn, #player-two-wrap.turn {
+    background-color: green;
 }
 
 #board-one, #board-two {
