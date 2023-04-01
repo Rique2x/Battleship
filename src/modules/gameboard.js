@@ -66,8 +66,8 @@ const Gameboard = function () {
         target.section.status = 'hit'
         if (target.ship.isSunk()) {
           if (ships.every((x) => x.isSunk()))
-            return obs.publish('all ships sunk', this)
-          return obs.publish('ship sunk', target.ship)
+          return obs.publish('allShipsSunk', this)
+          return obs.publish('shipSunk', target.ship)
         }
       }
     }
