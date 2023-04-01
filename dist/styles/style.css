@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Saira+Stencil+One&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -22,7 +23,9 @@ header {
   box-shadow: 0px 2px 10px #000;
 }
 header h1 {
+  font-family: "Saira Stencil One", cursive;
   font-size: 4rem;
+  font-weight: normal;
 }
 
 footer {
@@ -46,13 +49,16 @@ main {
   box-shadow: 0px 5px 10px -2px #000;
   border-radius: 5px;
 }
+#player-one-wrap p, #player-two-wrap p {
+  font-family: "Saira Stencil One", cursive;
+}
 
 #player-one-wrap.turn, #player-two-wrap.turn {
   outline: none;
 }
 
 #player-one-wrap.turn #board-one, #player-two-wrap.turn #board-two {
-  border-bottom: 4px solid #335145;
+  border-bottom: 4px solid #828c51;
 }
 
 #board-one, #board-two {
@@ -62,6 +68,7 @@ main {
   height: -moz-min-content;
   height: min-content;
   background: #d6f3ba;
+  box-shadow: inset 0px 0px 10px -2px #000;
 }
 #board-one div, #board-two div {
   display: flex;
