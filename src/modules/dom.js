@@ -91,9 +91,13 @@ const dom = (function () {
       if (
         elements.newAxis.textContent[elements.newAxis.textContent.length - 1] ===
         'X'
-      )
+        ) {
         elements.newAxis.textContent = 'Axis: Y'
-      else elements.newAxis.textContent = 'Axis: X'
+        elements.newBoard.classList.replace('x', 'y')
+    } else {
+      elements.newAxis.textContent = 'Axis: X'
+      elements.newBoard.classList.replace('y', 'x')
+    }
     }
   
     generateBoard(elements.newBoard)
@@ -111,6 +115,7 @@ const dom = (function () {
       updateDom,
       getCellIndex,
       switchAxis,
+      newBoard: elements.newBoard,
     }
   })()
   

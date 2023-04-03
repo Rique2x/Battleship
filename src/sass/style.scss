@@ -260,5 +260,45 @@ main {
             }
         }
     }
-
+    &.x.ship1 > div > div:hover::before {
+        height: 30px;
+        width: 30px;
+      }
+      &.x.ship2 > div > div:hover::before {
+        height: 30px;
+        width: 60px;
+      }
+      &.x.ship3 > div > div:hover::before {
+        height: 30px;
+        width: 90px;
+      }
+      &.x.ship4 > div > div:hover::before {
+        height: 30px;
+        width: 120px;
+      }
+      &.x.ship5 > div > div:hover::before {
+        height: 30px;
+        width: 150px;
+      }
+    
+      &.y.ship1 > div > div:hover::before {
+        height: 30px;
+        width: 30px;
+      }
+      &.y.ship2 > div > div:hover::before {
+        height: 60px;
+        width: 30px;
+      }
+      &.y.ship3 > div > div:hover::before {
+        height: 90px;
+        width: 30px;
+      }
+      &.y.ship4 > div > div:hover::before {
+        height: 120px;
+        width: 30px;
+      }
+      &.y.ship5 > div > div:hover::before {
+        height: 150px;
+        width: 30px;
+    }
 }
