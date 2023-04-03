@@ -247,4 +247,44 @@ main {
 }
 #new-board > div > div.ok {
   background-color: #1e352f;
+}
+#new-board.x.ship1 > div > div:hover::before {
+  height: 30px;
+  width: 30px;
+}
+#new-board.x.ship2 > div > div:hover::before {
+  height: 30px;
+  width: 60px;
+}
+#new-board.x.ship3 > div > div:hover::before {
+  height: 30px;
+  width: 90px;
+}
+#new-board.x.ship4 > div > div:hover::before {
+  height: 30px;
+  width: 120px;
+}
+#new-board.x.ship5 > div > div:hover::before {
+  height: 30px;
+  width: 150px;
+}
+#new-board.y.ship1 > div > div:hover::before {
+  height: 30px;
+  width: 30px;
+}
+#new-board.y.ship2 > div > div:hover::before {
+  height: 60px;
+  width: 30px;
+}
+#new-board.y.ship3 > div > div:hover::before {
+  height: 90px;
+  width: 30px;
+}
+#new-board.y.ship4 > div > div:hover::before {
+  height: 120px;
+  width: 30px;
+}
+#new-board.y.ship5 > div > div:hover::before {
+  height: 150px;
+  width: 30px;
 }/*# sourceMappingURL=style.css.map */
