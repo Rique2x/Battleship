@@ -9,6 +9,9 @@
   :root {
     --main-dir: column;
   }
+  header h1 {
+    font-size: 1rem;
+  }
 }
 @media (min-width: 900px) {
   :root {
@@ -125,7 +128,7 @@ main {
 }
 
 .hit {
-  background-image: url(./assets/icons/hit.svg);
+  background-image: url(./icons/hit.svg);
   background-size: cover;
 }
 .hit:hover {
@@ -137,7 +140,7 @@ main {
 }
 
 .miss {
-  background-image: url(./assets/icons/miss.svg);
+  background-image: url(./icons/miss.svg);
   background-size: cover;
 }
 .miss:hover {
